@@ -1,0 +1,1161 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>BadWolfie.live — Modern Network Hub</title>
+  <meta name="description" content="BadWolfie.live — Premium network hub for projects, status, and innovation." />
+
+  <meta property="og:title" content="BadWolfie.live" />
+  <meta property="og:description" content="Premium network hub for projects, status, and innovation." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://badwolfie.live/" />
+
+  <link rel="icon" href="/favicon.png" />
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    :root {
+      /* Dark theme - BadWolf gray with red accents */
+      --bg-primary: #2a2a2a;
+      --bg-secondary: #333333;
+      --bg-tertiary: #3d3d3d;
+      
+      --accent-primary: #dc2626;
+      --accent-secondary: #b91c1c;
+      --accent-glow: rgba(220, 38, 38, 0.3);
+      
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.8);
+      --text-tertiary: rgba(255, 255, 255, 0.6);
+      
+      --glass-bg: rgba(255, 255, 255, 0.06);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --glass-hover: rgba(255, 255, 255, 0.1);
+      
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+      --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.5);
+      --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.6);
+      --shadow-glow: 0 0 40px var(--accent-glow);
+    }
+
+    html[data-theme="light"] {
+      --bg-primary: #f5f5f5;
+      --bg-secondary: #e8e8e8;
+      --bg-tertiary: #d9d9d9;
+      
+      --accent-primary: #dc2626;
+      --accent-secondary: #b91c1c;
+      --accent-glow: rgba(220, 38, 38, 0.2);
+      
+      --text-primary: #1a1a1a;
+      --text-secondary: rgba(0, 0, 0, 0.75);
+      --text-tertiary: rgba(0, 0, 0, 0.55);
+      
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(0, 0, 0, 0.12);
+      --glass-hover: rgba(255, 255, 255, 0.95);
+      
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.12);
+      --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Animated gradient background */
+    .bg-gradient {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+      opacity: 0.35;
+      background: 
+        radial-gradient(circle at 20% 20%, var(--accent-primary) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, var(--accent-secondary) 0%, transparent 50%),
+        radial-gradient(circle at 40% 60%, #991b1b 0%, transparent 50%);
+      filter: blur(80px);
+      animation: gradientShift 15s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.1) rotate(5deg); }
+    }
+
+    /* Floating particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--accent-primary);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: float 20s infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      25% { transform: translate(100px, -100px); }
+      50% { transform: translate(-50px, -200px); }
+      75% { transform: translate(150px, -150px); }
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(42, 42, 42, 0.8);
+      border-bottom: 1px solid var(--glass-border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    html[data-theme="light"] header {
+      background: rgba(245, 245, 245, 0.8);
+    }
+
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(185, 28, 28, 0.1));
+      border: 1px solid var(--glass-border);
+    }
+
+    .logo-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .logo-text h1 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+
+    .logo-text p {
+      font-size: 0.75rem;
+      color: var(--text-tertiary);
+      margin: 0;
+    }
+
+    nav {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .nav-link {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-size: 0.875rem;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: var(--text-primary);
+      background: var(--glass-bg);
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--accent-primary);
+      transition: all 0.3s;
+      transform: translateX(-50%);
+    }
+
+    .nav-link:hover::after {
+      width: 80%;
+    }
+
+    .theme-toggle {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      color: var(--text-primary);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+
+    .theme-toggle:hover {
+      background: var(--glass-hover);
+      transform: translateY(-2px);
+    }
+
+    /* Main container */
+    main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* Hero section */
+    .hero {
+      padding: 6rem 0 4rem;
+      text-align: center;
+    }
+
+    .hero h2 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+    }
+
+    .hero .gradient-text {
+      background: linear-gradient(135deg, #dc2626, #b91c1c, #991b1b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      color: white;
+      box-shadow: var(--shadow-glow), var(--shadow-md);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 60px var(--accent-glow), var(--shadow-lg);
+    }
+
+    .btn-secondary {
+      background: var(--glass-bg);
+      color: var(--text-primary);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-secondary:hover {
+      background: var(--glass-hover);
+      transform: translateY(-4px);
+    }
+
+    /* Status badge */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(10px);
+      margin-bottom: 2rem;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 10px #10b981;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Grid sections */
+    .section {
+      margin: 4rem 0;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .section-tag {
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      font-size: 0.75rem;
+      color: var(--text-tertiary);
+      font-weight: 600;
+    }
+
+    /* Card grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #dc2626, #b91c1c, #991b1b);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent-primary);
+      box-shadow: var(--shadow-lg), 0 0 40px var(--accent-glow);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(220, 38, 38, 0.15);
+      border: 1px solid rgba(220, 38, 38, 0.35);
+      font-size: 0.75rem;
+      color: #fca5a5;
+      font-weight: 500;
+    }
+
+    html[data-theme="light"] .tag {
+      background: rgba(220, 38, 38, 0.1);
+      color: var(--accent-primary);
+    }
+
+    /* Feature grid */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .feature-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s;
+    }
+
+    .feature-card:hover {
+      background: var(--glass-hover);
+      transform: translateY(-4px);
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-card p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 6rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--glass-border);
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--text-primary);
+    }
+
+    /* Slot Machine Style - Logos Flip in Place */
+    .sponsors-section {
+      margin: 60px auto 60px;
+      max-width: 100%;
+      padding: 40px 20px;
+      background: var(--glass-bg);
+      border-radius: 20px;
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(10px);
+      -webkit-overflow-scrolling: touch;
+    }
+    .sponsors-title {
+      text-align: center;
+      font-weight: 600;
+      font-size: 18px;
+      color: var(--text-secondary);
+      margin-bottom: 35px;
+      letter-spacing: 0.5px;
+      line-height: 1.4;
+      padding: 0 10px;
+    }
+    
+    @media (max-width: 640px) {
+      .sponsors-title {
+        font-size: 16px;
+        margin-bottom: 30px;
+      }
+    }
+    .sponsors-grid {
+      display: flex;
+      gap: 0;
+      max-width: 1100px;
+      margin: 0 auto;
+      align-items: center;
+      justify-content: center;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+    .logo-slot {
+      flex: 1 1 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      min-height: 100px;
+      padding: 25px 20px;
+      transform: translateZ(0);
+    }
+    .logo-slot img {
+      max-width: 140px;
+      max-height: 55px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      position: absolute;
+      filter: brightness(0.9) grayscale(0.2);
+      transition: filter 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform, opacity, filter;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+    .logo-slot:hover img {
+      filter: brightness(1.1) grayscale(0);
+    }
+    .slot-divider {
+      width: 1px;
+      height: 56px;
+      background: var(--glass-border);
+      flex-shrink: 0;
+      transform: translateZ(0);
+    }
+    /* Logo flip animation - optimized for 60fps */
+    @keyframes logoFlip {
+      0% {
+        transform: scale(1) rotateY(0deg) translateZ(0);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(0.8) rotateY(90deg) translateZ(0);
+        opacity: 0.3;
+      }
+      100% {
+        transform: scale(1) rotateY(0deg) translateZ(0);
+        opacity: 1;
+      }
+    }
+    .animate-logoFlip {
+      animation: logoFlip 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .slot-divider.animate-logoFlip {
+      animation: none;
+    }
+    @media (max-width: 960px) {
+      .sponsors-grid {
+        flex-wrap: nowrap;
+        justify-content: center;
+      }
+      /* Hide slots 3-6 and their dividers on tablet */
+      .logo-slot:nth-child(n+7),
+      .slot-divider:nth-child(n+6) {
+        display: none;
+      }
+      .logo-slot {
+        padding: 20px 15px;
+      }
+      .logo-slot img {
+        max-width: 120px;
+        max-height: 45px;
+      }
+      .slot-divider {
+        height: 48px;
+      }
+    }
+    @media (max-width: 640px) {
+      .sponsors-section {
+        padding: 40px 15px;
+      }
+      .sponsors-grid {
+        flex-wrap: nowrap;
+        justify-content: center;
+        gap: 0;
+      }
+      /* Show ONLY first 2 logos and 1 divider on mobile */
+      .logo-slot:nth-child(n+5),
+      .slot-divider:nth-child(n+4) {
+        display: none !important;
+      }
+      .logo-slot {
+        flex: 1 1 0;
+        padding: 20px 15px;
+        min-width: 0;
+      }
+      .logo-slot img {
+        max-width: 110px;
+        max-height: 40px;
+      }
+      .slot-divider {
+        height: 40px;
+        display: flex !important;
+      }
+      /* Ensure exactly 2 logos show */
+      .slot-divider:nth-child(3) {
+        display: flex !important;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      nav {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .hero {
+        padding: 3rem 0 2rem;
+      }
+
+      .hero h2 {
+        font-size: 2.5rem;
+      }
+
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-gradient"></div>
+  
+  <div class="particles" id="particles"></div>
+
+  <header>
+    <div class="header-content">
+      <a href="#" class="logo">
+        <div class="logo-icon">
+          <img src="/favicon.png" alt="BadWolf Logo" />
+        </div>
+        <div class="logo-text">
+          <h1>BadWolfie.live</h1>
+          <p>Network • Projects • Status</p>
+        </div>
+      </a>
+
+      <nav>
+        <a href="#links" class="nav-link">Links</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#status" class="nav-link">Status</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <button class="theme-toggle" id="themeBtn">
+        <span id="themeIcon">🌙</span>
+        <span>Theme</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="status-badge">
+        <div class="status-dot"></div>
+        <span style="font-size: 0.875rem; font-weight: 500;">All Systems Online</span>
+      </div>
+
+      <h2>
+        Welcome to the<br/>
+        <span class="gradient-text">BadWolfie Network</span>
+      </h2>
+
+      <p>
+        Your central hub for projects, utilities, and network services.
+        Modern infrastructure, premium experience.
+      </p>
+
+      <div class="hero-cta">
+        <a href="#links" class="btn btn-primary">
+          Explore Projects →
+        </a>
+        <a href="https://status.badwolfie.live" class="btn btn-secondary" target="_blank" rel="noreferrer">
+          View Status
+        </a>
+      </div>
+    </section>
+
+    <!-- Quick Links -->
+    <section class="section" id="links">
+      <div class="section-header">
+        <h3 class="section-title">Quick Links</h3>
+        <span class="section-tag">Active</span>
+      </div>
+
+      <div class="card-grid">
+        <a href="https://gofan.badwolfie.live" target="_blank" rel="noreferrer" class="card" style="text-decoration: none; color: inherit;">
+          <div class="card-icon">🎯</div>
+          <h3>GoFan</h3>
+          <p>Streamlined GoFan login interface with sponsor carousel and modern design.</p>
+          <div class="card-tags">
+            <span class="tag">Live</span>
+            <span class="tag">Web App</span>
+          </div>
+        </a>
+
+        <a href="https://status.badwolfie.live" target="_blank" rel="noreferrer" class="card" style="text-decoration: none; color: inherit;">
+          <div class="card-icon">📊</div>
+          <h3>Status Dashboard</h3>
+          <p>Real-time uptime monitoring and service health tracking for all network services.</p>
+          <div class="card-tags">
+            <span class="tag">Monitoring</span>
+            <span class="tag">Live</span>
+          </div>
+        </a>
+
+        <a href="https://schoolcheats.badwolfie.live" target="_blank" rel="noreferrer" class="card" style="text-decoration: none; color: inherit;">
+          <div class="card-icon">📚</div>
+          <h3>School Cheats</h3>
+          <p>Comprehensive resource hub with tools, notes, and educational utilities.</p>
+          <div class="card-tags">
+            <span class="tag">Resources</span>
+            <span class="tag">Tools</span>
+          </div>
+        </a>
+
+        <a href="https://guns.badwolfie.live" target="_blank" rel="noreferrer" class="card" style="text-decoration: none; color: inherit;">
+          <div class="card-icon">📧</div>
+          <h3>Contact Info</h3>
+          <p>Get in touch - contact information and communication channels.</p>
+          <div class="card-tags">
+            <span class="tag">Info</span>
+            <span class="tag">Contact</span>
+          </div>
+        </a>
+
+        <div class="card" style="opacity: 0.6; cursor: not-allowed;">
+          <div class="card-icon" style="opacity: 0.5;">🚀</div>
+          <h3>Coming Soon</h3>
+          <p>More projects and services are in development. Stay tuned for updates.</p>
+          <div class="card-tags">
+            <span class="tag">Planned</span>
+            <span class="tag">Q1 2026</span>
+          </div>
+        </div>
+
+        <div class="card" style="opacity: 0.6; cursor: not-allowed;">
+          <div class="card-icon" style="opacity: 0.5;">🎨</div>
+          <h3>Brand System</h3>
+          <p>Consistent design language across all BadWolfie Network properties.</p>
+          <div class="card-tags">
+            <span class="tag">Design</span>
+            <span class="tag">Modern</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="section" id="projects">
+      <div class="section-header">
+        <h3 class="section-title">Featured Projects</h3>
+        <span class="section-tag">Pinned</span>
+      </div>
+
+      <div class="feature-grid">
+        <a href="https://status.badwolfie.live" target="_blank" rel="noreferrer" class="feature-card" style="text-decoration: none; color: inherit;">
+          <div class="feature-icon">📈</div>
+          <h4>status.badwolfie.live</h4>
+          <p>Uptime monitoring with historical data and incident tracking</p>
+        </a>
+
+        <a href="https://gofan.badwolfie.live" target="_blank" rel="noreferrer" class="feature-card" style="text-decoration: none; color: inherit;">
+          <div class="feature-icon">🎫</div>
+          <h4>gofan.badwolfie.live</h4>
+          <p>Custom GoFan login portal with responsive design</p>
+        </a>
+
+        <a href="https://schoolcheats.badwolfie.live" target="_blank" rel="noreferrer" class="feature-card" style="text-decoration: none; color: inherit;">
+          <div class="feature-icon">🛠️</div>
+          <h4>schoolcheats.badwolfie.live</h4>
+          <p>Educational resources and productivity tools</p>
+        </a>
+
+        <a href="https://guns.badwolfie.live" target="_blank" rel="noreferrer" class="feature-card" style="text-decoration: none; color: inherit;">
+          <div class="feature-icon">💬</div>
+          <h4>guns.badwolfie.live</h4>
+          <p>Contact information and support channels</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- Status -->
+    <section class="section" id="status">
+      <div class="section-header">
+        <h3 class="section-title">Network Status</h3>
+        <a href="https://status.badwolfie.live" target="_blank" rel="noreferrer" class="section-tag" style="cursor: pointer;">View All →</a>
+      </div>
+
+      <div class="card">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+          <div>
+            <h3 style="margin-bottom: 0.25rem;">Network Health</h3>
+            <p style="margin: 0; font-size: 0.875rem;">All services operational</p>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <div class="status-dot"></div>
+            <span style="font-weight: 600; color: #10b981;">Online</span>
+          </div>
+        </div>
+
+        <div style="display: grid; gap: 1rem;">
+          <div style="display: flex; justify-content: space-between; padding: 1rem; background: var(--glass-bg); border-radius: 12px;">
+            <span>Main Website</span>
+            <span style="color: #10b981; font-weight: 600;">✓ Operational</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 1rem; background: var(--glass-bg); border-radius: 12px;">
+            <span>Status Dashboard</span>
+            <span style="color: #10b981; font-weight: 600;">✓ Operational</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 1rem; background: var(--glass-bg); border-radius: 12px;">
+            <span>All Subdomains</span>
+            <span style="color: #10b981; font-weight: 600;">✓ Operational</span>
+          </div>
+        </div>
+
+        <a href="https://status.badwolfie.live" target="_blank" rel="noreferrer" style="display: inline-block; margin-top: 1.5rem; color: var(--accent-primary); font-weight: 600; text-decoration: none;">
+          View detailed status →
+        </a>
+      </div>
+    </section>
+
+    <!-- Brand Carousel -->
+    <section class="section" id="brands">
+      <div class="section-header">
+        <h3 class="section-title">Built with Modern Technologies</h3>
+        <span class="section-tag">Trusted Partners</span>
+      </div>
+
+      <div class="sponsors-section">
+        <h3 class="sponsors-title">Powered by industry-leading platforms and services</h3>
+        <div class="sponsors-grid">
+          <!-- Mobile shows only slots 1-2, Tablet shows 1-3, Desktop shows all 6 -->
+          <div class="logo-slot" data-slot="0">
+            <img src="assets/brand images/conterra.png" alt="Conterra" class="logo-image">
+          </div>
+          <div class="slot-divider"></div>
+          <div class="logo-slot" data-slot="1">
+            <img src="assets/brand images/gofanbanner.png" alt="GoFan" class="logo-image">
+          </div>
+          <div class="slot-divider"></div>
+          <div class="logo-slot" data-slot="2">
+            <img src="assets/brand images/obs.png" alt="OBS" class="logo-image">
+          </div>
+          <div class="slot-divider"></div>
+          <div class="logo-slot" data-slot="3">
+            <img src="assets/brand images/observium.png" alt="Observium" class="logo-image">
+          </div>
+          <div class="slot-divider"></div>
+          <div class="logo-slot" data-slot="4">
+            <img src="assets/brand images/persona.png" alt="Persona" class="logo-image">
+          </div>
+          <div class="slot-divider"></div>
+          <div class="logo-slot" data-slot="5">
+            <img src="assets/brand images/playon.png" alt="PlayOn" class="logo-image">
+          </div>
+        </div>
+
+        <!-- Hidden list of all available logos -->
+        <div class="hidden all-available-logos" style="display: none;">
+          <div data-index="0" data-alt="Conterra" data-src="assets/brand images/conterra.png"></div>
+          <div data-index="1" data-alt="GoFan" data-src="assets/brand images/gofanbanner.png"></div>
+          <div data-index="2" data-alt="OBS" data-src="assets/brand images/obs.png"></div>
+          <div data-index="3" data-alt="Observium" data-src="assets/brand images/observium.png"></div>
+          <div data-index="4" data-alt="Persona" data-src="assets/brand images/persona.png"></div>
+          <div data-index="5" data-alt="PlayOn" data-src="assets/brand images/playon.png"></div>
+          <div data-index="6" data-alt="Salesforce" data-src="assets/brand images/salesforce.png"></div>
+          <div data-index="7" data-alt="Stripe" data-src="assets/brand images/stripe.png"></div>
+          <div data-index="8" data-alt="Verizon" data-src="assets/brand images/verizon.png"></div>
+          <div data-index="9" data-alt="VMware vSphere" data-src="assets/brand images/vmwarevsphere.png"></div>
+          <div data-index="10" data-alt="AdSense" data-src="assets/brand images/adsense.png"></div>
+          <div data-index="11" data-alt="Cloudflare" data-src="assets/brand images/cloudflair.png"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section" id="contact">
+      <div class="section-header">
+        <h3 class="section-title">Get in Touch</h3>
+        <span class="section-tag">Available</span>
+      </div>
+
+      <div class="card">
+        <div style="text-align: center; padding: 2rem 0;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">📬</div>
+          <h3 style="margin-bottom: 1rem;">Contact Information</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+            All contact details and support channels are available on the contact page.
+          </p>
+          <a href="https://guns.badwolfie.live" target="_blank" rel="noreferrer" class="btn btn-primary">
+            Visit Contact Page →
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div style="font-size: 0.875rem; color: var(--text-tertiary);">
+        © <span id="year"></span> BadWolfie.live • All rights reserved
+      </div>
+      <div class="footer-links">
+        <a href="#links">Links</a>
+        <a href="#projects">Projects</a>
+        <a href="#status">Status</a>
+        <a href="#contact">Contact</a>
+        <a href="https://status.badwolfie.live" target="_blank" rel="noreferrer">Dashboard</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle
+    const themeBtn = document.getElementById('themeBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const html = document.documentElement;
+
+    function setTheme(theme) {
+      html.setAttribute('data-theme', theme);
+      localStorage.setItem('bw_theme', theme);
+      themeIcon.textContent = theme === 'light' ? '☀️' : '🌙';
+    }
+
+    const savedTheme = localStorage.getItem('bw_theme');
+    if (savedTheme) setTheme(savedTheme);
+
+    themeBtn.addEventListener('click', () => {
+      const current = html.getAttribute('data-theme');
+      setTheme(current === 'light' ? 'dark' : 'light');
+    });
+
+    // Keyboard shortcut
+    window.addEventListener('keydown', (e) => {
+      if (e.key.toLowerCase() === 't' && !e.metaKey && !e.ctrlKey && !e.altKey) {
+        const current = html.getAttribute('data-theme');
+        setTheme(current === 'light' ? 'dark' : 'light');
+      }
+    });
+
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Generate floating particles
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 20; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.top = Math.random() * 100 + '%';
+      particle.style.animationDelay = Math.random() * 20 + 's';
+      particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+      particlesContainer.appendChild(particle);
+    }
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href !== '#') {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      });
+    });
+    // Slot machine logo rotation - optimized for 60fps
+    (function() {
+      const logoImages = document.querySelectorAll('.logo-image');
+      const allLogos = [];
+      
+      // Build array of all available logos
+      document.querySelectorAll('.all-available-logos div').forEach(el => {
+        allLogos.push({
+          src: el.getAttribute('data-src'),
+          alt: el.getAttribute('data-alt')
+        });
+      });
+
+      const getVisibleSlots = () => {
+        const width = window.innerWidth;
+        if (width >= 960) return 6;
+        if (width >= 640) return 3;
+        return 2;
+      };
+
+      let currentIndex = getVisibleSlots();
+      const totalLogos = allLogos.length;
+      let lastRotationTime = Date.now();
+      const rotationInterval = 5000; // 5 seconds
+
+      // Use requestAnimationFrame for smooth animations
+      function animateLogos() {
+        const now = Date.now();
+        
+        if (now - lastRotationTime >= rotationInterval) {
+          lastRotationTime = now;
+          
+          let delay = 0;
+          const delayIncrement = 300;
+          const visibleCount = getVisibleSlots();
+
+          // Flip each visible logo with staggered timing
+          Array.from(logoImages).slice(0, visibleCount).forEach((img, index) => {
+            setTimeout(() => {
+              requestAnimationFrame(() => {
+                // Remove animation class
+                img.classList.remove('animate-logoFlip');
+                
+                // Force reflow
+                void img.offsetWidth;
+                
+                // Update src and alt
+                img.src = allLogos[currentIndex].src;
+                img.alt = allLogos[currentIndex].alt;
+                
+                // Add animation class
+                requestAnimationFrame(() => {
+                  img.classList.add('animate-logoFlip');
+                });
+                
+                // Move to next logo
+                currentIndex = (currentIndex + 1) % totalLogos;
+              });
+            }, delay);
+            
+            delay += delayIncrement;
+          });
+        }
+        
+        requestAnimationFrame(animateLogos);
+      }
+      
+      // Start animation loop
+      requestAnimationFrame(animateLogos);
+    })();
+  </script>
+</body>
+</html>
